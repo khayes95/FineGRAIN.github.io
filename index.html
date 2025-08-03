@@ -256,11 +256,20 @@
       <!--/ Framework Overview. -->
 
       <!-- Failure Modes. -->
-      <!-- Failure Modes Interactive Table -->
-      <div class="column">
-        <h2 class="title is-3">27 Failure Modes - Interactive Explorer</h2>
+    </div> <!-- Close the existing columns div -->
+
+    <!-- Full Width Failure Modes Section -->
+    <section class="section" style="background: #f8f9fa;">
+      <div class="container is-max-desktop">
         
-        <div class="filter-controls" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <!-- Header with purple gradient -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+          <h2 class="title is-2 has-text-white">FineGRAIN: 27 Failure Modes</h2>
+          <p class="subtitle is-4 has-text-white">Comprehensive evaluation framework for Text-to-Image models</p>
+        </div>
+        
+        <!-- Controls -->
+        <div class="filter-controls" style="background: white; padding: 20px; margin-bottom: 0;">
           <div class="columns">
             <div class="column">
               <div class="field">
@@ -291,20 +300,21 @@
           </div>
         </div>
         
-        <div class="table-container" style="box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-          <table class="table is-fullwidth is-hoverable">
+        <!-- Table -->
+        <div class="table-container" style="background: white; border-radius: 0 0 12px 12px;">
+          <table class="table is-fullwidth is-hoverable" style="margin-bottom: 0;">
             <thead>
-              <tr style="background-color: #f8f9fa;">
-                <th class="sortable" data-sort="name" style="cursor: pointer;">
+              <tr>
+                <th class="sortable" data-sort="name" style="cursor: pointer; background-color: #f8f9fa;">
                   Failure Mode
-                  <i class="fas fa-sort" id="sort-name"></i>
+                  <i class="fas fa-sort sort-icon" id="sort-name"></i>
                 </th>
-                <th class="sortable" data-sort="rate" style="cursor: pointer;">
+                <th class="sortable" data-sort="rate" style="cursor: pointer; background-color: #f8f9fa;">
                   Failure Rate
-                  <i class="fas fa-sort-down" id="sort-rate"></i>
+                  <i class="fas fa-sort-down sort-icon active" id="sort-rate"></i>
                 </th>
-                <th>Description</th>
-                <th>Sample Prompt</th>
+                <th style="background-color: #f8f9fa;">Description</th>
+                <th style="background-color: #f8f9fa;">Sample Prompt</th>
               </tr>
             </thead>
             <tbody id="failureModeTable">
@@ -313,15 +323,21 @@
           </table>
         </div>
         
-        <div class="notification is-info is-light" style="margin-top: 20px;">
+        <!-- Help text -->
+        <div class="notification is-info is-light" style="margin-top: 30px;">
           <p><strong>How to read this table:</strong></p>
           <ul>
-            <li><strong>Failure Rate:</strong> Percentage of images that contain the failure mode</li>
-            <li><strong>Sample Prompts:</strong> Real prompts from our evaluation</li>
-            <li><strong>Color coding:</strong> Red (>70%) = Very challenging, Yellow (30-70%) = Moderate, Green (<30%) = Less challenging</li>
+            <li><strong>Failure Rate:</strong> Percentage of images that contain the failure mode (higher = more challenging)</li>
+            <li><strong>Sample Prompts:</strong> Real prompts used in our evaluation to elicit specific failure modes</li>
+            <li><strong>Color coding:</strong> <span class="failure-rate high-failure" style="background-color: #ff3860; color: white; padding: 2px 6px; border-radius: 4px;">Red (>70%)</span> = Very challenging, <span class="failure-rate medium-failure" style="background-color: #ffdd57; color: #333; padding: 2px 6px; border-radius: 4px;">Yellow (30-70%)</span> = Moderate, <span class="failure-rate low-failure" style="background-color: #23d160; color: white; padding: 2px 6px; border-radius: 4px;">Green (<30%)</span> = Less challenging</li>
           </ul>
         </div>
+        
       </div>
+    </section>
+    
+    <div class="container is-max-desktop"> <!-- Restart container for next sections -->
+      <div class="columns is-centered">
     </div>
     <!--/ Failure Modes. -->
 
