@@ -256,16 +256,70 @@
       <!--/ Framework Overview. -->
 
       <!-- Failure Modes. -->
+      <!-- Failure Modes Interactive Table -->
       <div class="column">
-        <h2 class="title is-3">27 Failure Modes</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              We identify 11 high-level failure categories, split into 27 specific fine-grained failure modes. Each mode tests different aspects of T2I and VLM capabilities, from counting objects to rendering complex text.
-            </p>
-            <img src="./static/images/failure_hierarchy.png" alt="Failure Mode Hierarchy" style="width: 100%; height: auto;">
+        <h2 class="title is-3">27 Failure Modes - Interactive Explorer</h2>
+        
+        <div class="filter-controls" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Search Failure Modes</label>
+                <div class="control has-icons-left">
+                  <input class="input" type="text" id="searchInput" placeholder="Search by name, description, or prompt...">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Filter by Difficulty</label>
+                <div class="control">
+                  <div class="select">
+                    <select id="difficultyFilter">
+                      <option value="all">All Difficulties</option>
+                      <option value="high">High Failure Rate (>70%)</option>
+                      <option value="medium">Medium Failure Rate (30-70%)</option>
+                      <option value="low">Low Failure Rate (<30%)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
+        </div>
+        
+        <div class="table-container" style="box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+          <table class="table is-fullwidth is-hoverable">
+            <thead>
+              <tr style="background-color: #f8f9fa;">
+                <th class="sortable" data-sort="name" style="cursor: pointer;">
+                  Failure Mode
+                  <i class="fas fa-sort" id="sort-name"></i>
+                </th>
+                <th class="sortable" data-sort="rate" style="cursor: pointer;">
+                  Failure Rate
+                  <i class="fas fa-sort-down" id="sort-rate"></i>
+                </th>
+                <th>Description</th>
+                <th>Sample Prompt</th>
+              </tr>
+            </thead>
+            <tbody id="failureModeTable">
+              <!-- Table rows populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="notification is-info is-light" style="margin-top: 20px;">
+          <p><strong>How to read this table:</strong></p>
+          <ul>
+            <li><strong>Failure Rate:</strong> Percentage of images that contain the failure mode</li>
+            <li><strong>Sample Prompts:</strong> Real prompts from our evaluation</li>
+            <li><strong>Color coding:</strong> Red (>70%) = Very challenging, Yellow (30-70%) = Moderate, Green (<30%) = Less challenging</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -283,7 +337,7 @@
         </div>
         
         <div class="content has-text-centered">
-          <img src="./static/images/figures/t2i_model_comparison.png" alt="T2I Model Performance Comparison" style="width: 100%; height: auto; max-width: 800px;">
+          <img src="./static/images/figures/t2i_model_compare.png" alt="T2I Model Performance Comparison" style="width: 100%; height: auto; max-width: 800px;">
         </div>
 
         <h3 class="title is-4">Key Findings</h3>

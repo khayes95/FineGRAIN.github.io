@@ -3,6 +3,7 @@ body {
 }
 
 
+
 .footer .icon-link {
     font-size: 25px;
     color: #000;
@@ -154,4 +155,89 @@ body {
 }
 #interpolation-image-wrapper img {
   border-radius: 5px;
+}
+
+
+/* interative table */
+/* Failure Modes Interactive Table Styles */
+.failure-rate {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
+}
+.high-failure { background-color: #ff3860; }
+.medium-failure { background-color: #ffdd57; color: #333; }
+.low-failure { background-color: #23d160; }
+
+.sample-prompt {
+  max-width: 400px;
+  font-style: italic;
+  font-size: 0.9em;
+  line-height: 1.3;
+  color: #666;
+}
+
+.description {
+  max-width: 300px;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+.failure-mode-name {
+  font-weight: bold;
+  color: #3273dc;
+}
+
+.table-container {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+}
+
+.table td {
+  vertical-align: top;
+  padding: 12px;
+}
+
+.filter-controls {
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.search-box {
+  max-width: 400px;
+}
+
+tr:hover {
+  background-color: #f8f9fa;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  background-color: #e9ecef;
+}
+
+.sort-icon {
+  margin-left: 5px;
+  opacity: 0.5;
+}
+
+.sort-icon.active {
+  opacity: 1;
 }
