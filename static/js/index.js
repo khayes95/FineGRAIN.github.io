@@ -79,9 +79,8 @@ $(document).ready(function() {
 
 
 
-// Interactive table
+// Replace your entire JavaScript section (after bulmaSlider.attach();) with this:
 
-// FineGRAIN Failure Modes Interactive Table
 // FineGRAIN Failure Modes Interactive Table
 document.addEventListener('DOMContentLoaded', function() {
     // Only run if the failure mode table exists on this page
@@ -118,8 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: "Texture attribute binding", rate: 6.0, category: "attribute", description: "The model incorrectly applies textures to objects.", prompt: "A cute marble boat with visible veining, floating on a rough sea made entirely of sandpaper.", image: "./static/images/examples/texture_example.jpg" }
     ];
 
-    
-
     // Model Performance Data - ALL 27 failure modes
     const modelPerformanceData = [
         { failureMode: "Cause-and-effect Relations", flux: 44.83, sd35: 36.84, sd35m: 31.58, sd3m: 27.59, sd3xl: 21.05 },
@@ -151,7 +148,39 @@ document.addEventListener('DOMContentLoaded', function() {
         { failureMode: "Texture Binding", flux: 43.33, sd35: 63.33, sd35m: 53.33, sd3m: 36.67, sd3xl: 23.33 }
     ];
 
+    // VLM Performance Data
+    const vlmPerformanceData = [
+        { failureMode: "Opposite of Normal Relation", molmo: 50.7, internvl3: 58.0, pixtral: 54.0 },
+        { failureMode: "Colour attribute binding", molmo: 63.3, internvl3: 46.7, pixtral: 45.3 },
+        { failureMode: "Shape attribute binding", molmo: 74.0, internvl3: 68.7, pixtral: 70.0 },
+        { failureMode: "Texture attribute binding", molmo: 63.3, internvl3: 63.3, pixtral: 65.3 },
+        { failureMode: "Spatial Relation", molmo: 70.0, internvl3: 74.0, pixtral: 72.7 },
+        { failureMode: "Physics", molmo: 76.7, internvl3: 70.0, pixtral: 72.0 },
+        { failureMode: "Emotional conveyance", molmo: 64.7, internvl3: 60.7, pixtral: 64.0 },
+        { failureMode: "Anatomical limb and torso accuracy", molmo: 69.3, internvl3: 58.7, pixtral: 43.3 },
+        { failureMode: "Perspective", molmo: 62.0, internvl3: 72.7, pixtral: 75.3 },
+        { failureMode: "Scaling", molmo: 70.7, internvl3: 83.3, pixtral: 73.3 },
+        { failureMode: "Human Anatomy Moving", molmo: 46.2, internvl3: 36.6, pixtral: 33.8 },
+        { failureMode: "Human Action", molmo: 52.4, internvl3: 49.0, pixtral: 46.9 },
+        { failureMode: "Counts or Multiple Objects", molmo: 100.0, internvl3: 100.0, pixtral: 97.9 },
+        { failureMode: "FG-BG relations", molmo: 55.9, internvl3: 57.2, pixtral: 53.8 },
+        { failureMode: "Text-based", molmo: 66.0, internvl3: 75.0, pixtral: 76.6 },
+        { failureMode: "Negation", molmo: 70.0, internvl3: 64.3, pixtral: 64.3 },
+        { failureMode: "Blending Different Styles", molmo: 89.0, internvl3: 87.5, pixtral: 84.6 },
+        { failureMode: "Depicting abstract concepts", molmo: 32.3, internvl3: 28.5, pixtral: 30.0 },
+        { failureMode: "Social Relations", molmo: 56.9, internvl3: 50.8, pixtral: 47.7 },
+        { failureMode: "Tense and aspect variation", molmo: 61.5, internvl3: 62.0, pixtral: 69.2 },
+        { failureMode: "Background and Foreground Mismatch", molmo: 62.0, internvl3: 76.0, pixtral: 70.5 },
+        { failureMode: "Surreal", molmo: 43.2, internvl3: 48.8, pixtral: 37.6 },
+        { failureMode: "Action and motion representation", molmo: 69.6, internvl3: 53.6, pixtral: 59.2 },
+        { failureMode: "Long text specific", molmo: 96.8, internvl3: 99.2, pixtral: 99.2 },
+        { failureMode: "Tense+Text Rendering + Style", molmo: 86.4, internvl3: 85.5, pixtral: 88.8 },
+        { failureMode: "Short Text Specific", molmo: 63.3, internvl3: 68.8, pixtral: 66.4 },
+        { failureMode: "Visual Reasoning Cause-and-effect Relations", molmo: 69.6, internvl3: 59.1, pixtral: 61.7 }
+    ];
+
     let filteredFailureModes = [...failureModes];
+    let filteredVlmData = [...vlmPerformanceData];
 
     function getFailureRateClass(rate) {
         if (rate >= 70) return 'high-failure';
@@ -165,6 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (score >= 40) return '#ff9f43'; // Orange
         if (score >= 20) return '#ff6b6b'; // Light red
         return '#ff3860'; // Red
+    }
+
+    function getBestVlm(molmo, internvl3, pixtral) {
+        const scores = { Molmo: molmo, InternVL3: internvl3, Pixtral: pixtral };
+        const best = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+        return { name: best, score: scores[best] };
     }
 
     function renderFailureModesTable() {
@@ -221,6 +256,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function renderVlmComparisonTable() {
+        const tbody = document.getElementById('vlmComparisonBody');
+        if (!tbody) return;
+        
+        tbody.innerHTML = '';
+
+        filteredVlmData.forEach(row => {
+            const best = getBestVlm(row.molmo, row.internvl3, row.pixtral);
+            const tableRow = document.createElement('tr');
+            tableRow.innerHTML = `
+                <td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;">
+                    <strong>${row.failureMode}</strong>
+                </td>
+                <td class="has-text-centered ${best.name === 'Molmo' ? 'has-text-weight-bold' : ''}">
+                    ${row.molmo.toFixed(1)}%
+                    ${best.name === 'Molmo' ? '🏆' : ''}
+                </td>
+                <td class="has-text-centered ${best.name === 'InternVL3' ? 'has-text-weight-bold' : ''}">
+                    ${row.internvl3.toFixed(1)}%
+                    ${best.name === 'InternVL3' ? '🏆' : ''}
+                </td>
+                <td class="has-text-centered ${best.name === 'Pixtral' ? 'has-text-weight-bold' : ''}">
+                    ${row.pixtral.toFixed(1)}%
+                    ${best.name === 'Pixtral' ? '🏆' : ''}
+                </td>
+                <td class="has-text-centered has-text-weight-bold">
+                    ${best.name}: ${best.score.toFixed(1)}%
+                </td>
+            `;
+            tbody.appendChild(tableRow);
+        });
+    }
+
     function filterFailureModes() {
         const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
         const difficultyFilter = document.getElementById('difficultyFilter')?.value || 'all';
@@ -246,15 +314,53 @@ document.addEventListener('DOMContentLoaded', function() {
         renderFailureModesTable();
     }
 
-    // Initialize tables
+    function filterVlmData() {
+        const searchTerm = document.getElementById('vlmSearchInput')?.value.toLowerCase() || '';
+        
+        filteredVlmData = vlmPerformanceData.filter(row => {
+            return row.failureMode.toLowerCase().includes(searchTerm);
+        });
+        
+        sortVlmData();
+    }
+
+    function sortVlmData() {
+        const sortBy = document.getElementById('vlmSortSelect')?.value || 'molmo';
+        
+        filteredVlmData.sort((a, b) => {
+            switch(sortBy) {
+                case 'molmo':
+                    return b.molmo - a.molmo;
+                case 'internvl3':
+                    return b.internvl3 - a.internvl3;
+                case 'pixtral':
+                    return b.pixtral - a.pixtral;
+                case 'difference':
+                    const diffA = Math.max(a.molmo, a.internvl3, a.pixtral) - Math.min(a.molmo, a.internvl3, a.pixtral);
+                    const diffB = Math.max(b.molmo, b.internvl3, b.pixtral) - Math.min(b.molmo, b.internvl3, b.pixtral);
+                    return diffB - diffA;
+                case 'name':
+                    return a.failureMode.localeCompare(b.failureMode);
+                default:
+                    return b.molmo - a.molmo;
+            }
+        });
+        
+        renderVlmComparisonTable();
+    }
+
+    // Initialize all tables
     if (document.getElementById('failureModeTable')) {
         renderFailureModesTable();
     }
     if (document.getElementById('modelComparisonBody')) {
         renderModelComparisonTable();
     }
+    if (document.getElementById('vlmComparisonBody')) {
+        renderVlmComparisonTable();
+    }
 
-    // Add event listeners
+    // Add event listeners for failure modes table
     const searchInput = document.getElementById('searchInput');
     const difficultyFilter = document.getElementById('difficultyFilter');
 
@@ -264,137 +370,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (difficultyFilter) {
         difficultyFilter.addEventListener('change', filterFailureModes);
     }
-    // VLM Performance Data
-const vlmPerformanceData = [
-    { failureMode: "Opposite of Normal Relation", molmo: 50.7, internvl3: 58.0, pixtral: 54.0 },
-    { failureMode: "Colour attribute binding", molmo: 63.3, internvl3: 46.7, pixtral: 45.3 },
-    { failureMode: "Shape attribute binding", molmo: 74.0, internvl3: 68.7, pixtral: 70.0 },
-    { failureMode: "Texture attribute binding", molmo: 63.3, internvl3: 63.3, pixtral: 65.3 },
-    { failureMode: "Spatial Relation", molmo: 70.0, internvl3: 74.0, pixtral: 72.7 },
-    { failureMode: "Physics", molmo: 76.7, internvl3: 70.0, pixtral: 72.0 },
-    { failureMode: "Emotional conveyance", molmo: 64.7, internvl3: 60.7, pixtral: 64.0 },
-    { failureMode: "Anatomical limb and torso accuracy", molmo: 69.3, internvl3: 58.7, pixtral: 43.3 },
-    { failureMode: "Perspective", molmo: 62.0, internvl3: 72.7, pixtral: 75.3 },
-    { failureMode: "Scaling", molmo: 70.7, internvl3: 83.3, pixtral: 73.3 },
-    { failureMode: "Human Anatomy Moving", molmo: 46.2, internvl3: 36.6, pixtral: 33.8 },
-    { failureMode: "Human Action", molmo: 52.4, internvl3: 49.0, pixtral: 46.9 },
-    { failureMode: "Counts or Multiple Objects", molmo: 100.0, internvl3: 100.0, pixtral: 97.9 },
-    { failureMode: "FG-BG relations", molmo: 55.9, internvl3: 57.2, pixtral: 53.8 },
-    { failureMode: "Text-based", molmo: 66.0, internvl3: 75.0, pixtral: 76.6 },
-    { failureMode: "Negation", molmo: 70.0, internvl3: 64.3, pixtral: 64.3 },
-    { failureMode: "Blending Different Styles", molmo: 89.0, internvl3: 87.5, pixtral: 84.6 },
-    { failureMode: "Depicting abstract concepts", molmo: 32.3, internvl3: 28.5, pixtral: 30.0 },
-    { failureMode: "Social Relations", molmo: 56.9, internvl3: 50.8, pixtral: 47.7 },
-    { failureMode: "Tense and aspect variation", molmo: 61.5, internvl3: 62.0, pixtral: 69.2 },
-    { failureMode: "Background and Foreground Mismatch", molmo: 62.0, internvl3: 76.0, pixtral: 70.5 },
-    { failureMode: "Surreal", molmo: 43.2, internvl3: 48.8, pixtral: 37.6 },
-    { failureMode: "Action and motion representation", molmo: 69.6, internvl3: 53.6, pixtral: 59.2 },
-    { failureMode: "Long text specific", molmo: 96.8, internvl3: 99.2, pixtral: 99.2 },
-    { failureMode: "Tense+Text Rendering + Style", molmo: 86.4, internvl3: 85.5, pixtral: 88.8 },
-    { failureMode: "Short Text Specific", molmo: 63.3, internvl3: 68.8, pixtral: 66.4 },
-    { failureMode: "Visual Reasoning Cause-and-effect Relations", molmo: 69.6, internvl3: 59.1, pixtral: 61.7 }
-];
 
-let filteredVlmData = [...vlmPerformanceData];
-
-function getVlmScoreColor(score) {
-    if (score >= 90) return '#00d1b2'; // Teal - Excellent
-    if (score >= 80) return '#23d160'; // Green - Very Good
-    if (score >= 70) return '#ffdd57'; // Yellow - Good  
-    if (score >= 60) return '#ff9f43'; // Orange - Fair
-    if (score >= 50) return '#ff6b6b'; // Light red - Poor
-    return '#ff3860'; // Red - Very Poor
-}
-
-function getBestVlm(molmo, internvl3, pixtral) {
-    const scores = { Molmo: molmo, InternVL3: internvl3, Pixtral: pixtral };
-    const best = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-    return { name: best, score: scores[best] };
-}
-
-function renderVlmComparisonTable() {
-    const tbody = document.getElementById('vlmComparisonBody');
-    if (!tbody) return;
+    // Add event listeners for VLM table
+    const vlmSearchInput = document.getElementById('vlmSearchInput');
+    const vlmSortSelect = document.getElementById('vlmSortSelect');
     
-    tbody.innerHTML = '';
-
-    filteredVlmData.forEach(row => {
-        const best = getBestVlm(row.molmo, row.internvl3, row.pixtral);
-        const tableRow = document.createElement('tr');
-        tableRow.innerHTML = `
-            <td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;">
-                <strong>${row.failureMode}</strong>
-            </td>
-            <td class="has-text-centered ${best.name === 'Molmo' ? 'has-text-weight-bold' : ''}">
-                ${row.molmo.toFixed(1)}%
-                ${best.name === 'Molmo' ? '🏆' : ''}
-            </td>
-            <td class="has-text-centered ${best.name === 'InternVL3' ? 'has-text-weight-bold' : ''}">
-                ${row.internvl3.toFixed(1)}%
-                ${best.name === 'InternVL3' ? '🏆' : ''}
-            </td>
-            <td class="has-text-centered ${best.name === 'Pixtral' ? 'has-text-weight-bold' : ''}">
-                ${row.pixtral.toFixed(1)}%
-                ${best.name === 'Pixtral' ? '🏆' : ''}
-            </td>
-            <td class="has-text-centered has-text-weight-bold">
-                ${best.name}: ${best.score.toFixed(1)}%
-            </td>
-        `;
-        tbody.appendChild(tableRow);
-    });
-}
-
-function filterVlmData() {
-    const searchTerm = document.getElementById('vlmSearchInput')?.value.toLowerCase() || '';
-    
-    filteredVlmData = vlmPerformanceData.filter(row => {
-        return row.failureMode.toLowerCase().includes(searchTerm);
-    });
-    
-    sortVlmData();
-}
-
-function sortVlmData() {
-    const sortBy = document.getElementById('vlmSortSelect')?.value || 'molmo';
-    
-    filteredVlmData.sort((a, b) => {
-        switch(sortBy) {
-            case 'molmo':
-                return b.molmo - a.molmo;
-            case 'internvl3':
-                return b.internvl3 - a.internvl3;
-            case 'pixtral':
-                return b.pixtral - a.pixtral;
-            case 'difference':
-                const diffA = Math.max(a.molmo, a.internvl3, a.pixtral) - Math.min(a.molmo, a.internvl3, a.pixtral);
-                const diffB = Math.max(b.molmo, b.internvl3, b.pixtral) - Math.min(b.molmo, b.internvl3, b.pixtral);
-                return diffB - diffA;
-            case 'name':
-                return a.failureMode.localeCompare(b.failureMode);
-            default:
-                return b.molmo - a.molmo;
-        }
-    });
-    
-    renderVlmComparisonTable();
-}
-
-// Initialize VLM table
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('vlmComparisonBody')) {
-        renderVlmComparisonTable();
-        
-        // Add event listeners
-        const vlmSearchInput = document.getElementById('vlmSearchInput');
-        const vlmSortSelect = document.getElementById('vlmSortSelect');
-        
-        if (vlmSearchInput) {
-            vlmSearchInput.addEventListener('input', filterVlmData);
-        }
-        if (vlmSortSelect) {
-            vlmSortSelect.addEventListener('change', sortVlmData);
-        }
+    if (vlmSearchInput) {
+        vlmSearchInput.addEventListener('input', filterVlmData);
     }
-});
+    if (vlmSortSelect) {
+        vlmSortSelect.addEventListener('change', sortVlmData);
+    }
 });
