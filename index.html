@@ -456,6 +456,108 @@
 </section>
 
 
+
+<!-- VLM Performance Comparison Table -->
+<section class="section" style="background: #f8f9fa;">
+  <div class="container is-max-desktop">
+    
+    <div style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+      <h2 class="title is-2 has-text-white">VLM Judge Performance Comparison</h2>
+      <p class="subtitle is-4 has-text-white">Accuracy rates for Vision Language Models in identifying failure modes</p>
+    </div>
+    
+    <!-- Overall Performance Summary -->
+    <div style="background: white; padding: 20px; border-bottom: 1px solid #ddd;">
+      <h3 class="title is-4">Overall VLM Accuracy</h3>
+      <div class="columns">
+        <div class="column has-text-centered">
+          <div style="background: #00d1b2; color: white; padding: 15px; border-radius: 8px;">
+            <div style="font-size: 2rem; font-weight: bold;">66.1%</div>
+            <div><strong>Molmo</strong> (Best Overall)</div>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div style="background: #3273dc; color: white; padding: 15px; border-radius: 8px;">
+            <div style="font-size: 2rem; font-weight: bold;">65.1%</div>
+            <div><strong>InternVL3</strong></div>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div style="background: #ff3860; color: white; padding: 15px; border-radius: 8px;">
+            <div style="font-size: 2rem; font-weight: bold;">63.8%</div>
+            <div><strong>Pixtral</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- VLM Search and Filter -->
+    <div style="background: white; padding: 20px; border-bottom: 1px solid #ddd;">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">Search Failure Modes</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" id="vlmSearchInput" placeholder="Search failure modes...">
+              <span class="icon is-small is-left">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">Sort by Performance</label>
+            <div class="control">
+              <div class="select">
+                <select id="vlmSortSelect">
+                  <option value="molmo">Sort by Molmo (Best → Worst)</option>
+                  <option value="internvl3">Sort by InternVL3</option>
+                  <option value="pixtral">Sort by Pixtral</option>
+                  <option value="difference">Sort by Largest Difference</option>
+                  <option value="name">Sort by Name (A-Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- VLM Comparison Table -->
+    <div style="background: white; padding: 20px; border-radius: 0 0 12px 12px; overflow-x: auto;">
+      <table class="table is-fullwidth is-hoverable" id="vlmComparisonTable">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 10;">Failure Mode</th>
+            <th class="has-text-centered">Molmo</th>
+            <th class="has-text-centered">InternVL3</th>
+            <th class="has-text-centered">Pixtral</th>
+            <th class="has-text-centered">Best Performance</th>
+          </tr>
+        </thead>
+        <tbody id="vlmComparisonBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+      
+      <div class="notification is-info is-light" style="margin-top: 20px;">
+        <p><strong>Key VLM Insights:</strong></p>
+        <ul>
+          <li><strong>Molmo</strong> leads in overall accuracy but excels particularly in anatomical accuracy and action representation</li>
+          <li><strong>All VLMs</strong> achieve near-perfect performance on counting objects (>97% accuracy)</li>
+          <li><strong>Abstract concepts</strong> remain challenging for all VLMs (~30% accuracy)</li>
+          <li><strong>Text-based</strong> evaluation shows significant variation between VLMs (66-77%)</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3">Prompt Difficulty Scaling</h2>
