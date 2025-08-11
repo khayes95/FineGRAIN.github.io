@@ -341,6 +341,9 @@
     </div>
     <!--/ Failure Modes. -->
 
+
+
+    
     <!-- Model Performance. -->
     <div class="columns is-centered" id="leaderboard">
       <div class="column is-full-width">
@@ -368,8 +371,48 @@
     <!--/ Model Performance. -->
 
   </div>
+
 </section>
 
+<!-- Model Performance Comparison Table -->
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+      <h2 class="title is-2 has-text-white">T2I Model Performance Comparison</h2>
+      <p class="subtitle is-4 has-text-white">Success rates (%) for 5 text-to-image models across all failure modes</p>
+    </div>
+    
+    <div style="background: white; padding: 20px; border-radius: 0 0 12px 12px; overflow-x: auto;">
+      <table class="table is-fullwidth is-hoverable" id="modelComparisonTable">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 10;">Failure Mode</th>
+            <th class="has-text-centered">Flux</th>
+            <th class="has-text-centered">SD3.5</th>
+            <th class="has-text-centered">SD3.5-M</th>
+            <th class="has-text-centered">SD3-M</th>
+            <th class="has-text-centered">SD3-XL</th>
+          </tr>
+        </thead>
+        <tbody id="modelComparisonBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+      
+      <div class="notification is-info is-light" style="margin-top: 20px;">
+        <p><strong>Key Insights:</strong></p>
+        <ul>
+          <li><strong>Flux</strong> leads overall with 51.04% average success rate</li>
+          <li><strong>All models fail completely</strong> at counting objects (0% success)</li>
+          <li><strong>Color binding</strong> is well-handled by most models (>90% except SD3-XL)</li>
+          <li><strong>Text rendering</strong> varies dramatically between models</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-desktop">
