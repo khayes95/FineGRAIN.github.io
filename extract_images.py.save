@@ -1,0 +1,176 @@
+#!/usr/bin/env python3
+"""
+Script to extract one good failure example per failure mode from FineGRAIN JSON data
+"""
+
+import json
+import os
+import shutil
+from pathlib import Path
+
+def load_json_data(json_path):
+    """Load and parse the JSON metadata file"""
+    with open(json_path, 'r') as f:
+        return json.load(f)
+
+def clean_prompt(prompt):
+    """Clean up prompts for display (remove extra details, keep main concept)"""
+    # Remove common photography terms that clutter the display
+    cleaning_terms = [
+        'Studio lighting, high resolution.',
+        'Product photography.',
+        'Blur background, product photography.',
+        '4K resolution.',
+        'High detail, 4K resolution.',
+        'Hyperrealistic rendering, 8k resolution.',
+        'Natural light photo, photo realism, 4k, ultra realistic.',
+        'studio lighting, high detail, 4K resolution.',
+        'vibrant colors, soft studio lighting, 4K resolution.'
+    ]
+    
+    cleaned = prompt
+    for term in cleaning_terms:
+        cleaned = cleaned.replace(term, '').strip()
+    
+    # Remove trailing commas and extra spaces
+    cleaned = cleaned.rstrip(', ').strip()
+    
+    return cleaned
+
+def map_failure_mode_names(json_name):
+    """Map JSON failure mode names to JavaScript table names"""
+    mapping = {
+        "Counts or Multiple Objects": "Counts or Multiple Objects",
+        "Color attribute binding": "Colour attribute binding", 
+        "Shape attribute binding": "Shape attribute binding",
+        "Texture attribute binding": "Texture attribute binding",
+        "Spatial Relation": "Spatial Relation",
+        "Physics": "Physics",
+        "Visual Reasoning Cause-and-effect Relations": "Visual Reasoning Cause-and-effect Relations",
+        "FG-BG relations": "FG-BG relations",
+        "Text-based": "Text-based",
+        "Negation": "Negation",
+        "Blending Different Styles": "Blending Different Styles",
+        "Depicting abstract concepts": "Depicting abstract concepts",
+        "Social Relations": "Social Relations",
+        "Tense and aspect variation": "Tense and aspect variation",
+        "Background and Foreground Mismatch": "Background and Foreground Mismatch",
+        "Surreal": "Surreal",
+        "Action and motion representation": "Action and motion representation",
+        "Long text specific": "Long text specific",
+        "Tense+Text Rendering + Style": "Tense+Text Rendering + Style",
+        "Short Text Specific": "Short Text Specific",
+        "Anatomical limb and torso accuracy": "Anatomical limb and torso accuracy",
+        "Perspective": "Perspective",
+        "Scaling": "Scaling",
+        "Human Anatomy Moving": "Human Anatomy Moving",
+        "Human Action": "Human Action",
+        "Emotional conveyance": "Emotional conveyance",
+        "Opposite of Normal Relation": "Opposite of Normal Relation"
+    }
+    return mapping.get(json_name, json_name)
+
+def extract_failure_examples(data, source_dir, target_dir):
+    """Extract one good failure example per failure mode"""
+    
+    # Group by failure mode
+    failure_groups = {}
+    for item in data:
+        failure_mode = item['failure_mode']
+        if failure_mode not in failure_groups:
+            failure_groups[failure_mode] = []
+        failure_groups[failure_mode].append(item)
+    
+    # Find best example for each failure mode
+    selected_examples = {}
+    copy_commands = []
+    image_mappings = {}
+    
+    for failure_mode, examples in failure_groups.items():
+        # Filter for good failure examples
+        good_failures = [
+            ex for ex in examples 
+            if ex.get('human_evaluation') == 1 and ex.get('status') == 'success'
+        ]
+        
+        if not good_failures:
+            print(f"⚠️  No good failure examples found for: {failure_mode}")
+            continue
+            
+        # Pick the first good example
+        selected = good_failures[0]
+        
+        # Create clean filename
+        clean_name = failure_mode.lower().replace(' ', '_').replace('(', '').replace(')', '').replace('-', '_')
+        source_path = os.path.join(source_dir, selected['image_path'])
+        target_filename = f"{clean_name}_failure.png"
+        target_path = os.path.join(target_dir, target_filename)
+        
+        # Store info
+        selected_examples[failure_mode] = {
+            'source_path': source_path,
+            'target_path': target_path,
+            'target_filename': target_filename,
+            'prompt': clean_prompt(selected['prompt']),
+            'original_prompt': selected['prompt']
+        }
+        
+        # Generate copy command
+        copy_commands.append(f"cp '{source_path}' '{target_path}'")
+        
+        # Create JavaScript mapping
+        js_name = map_failure_mode_names(failure_mode)
+        image_mappings[js_name] = {
+            'image': f"./static/images/examples/{target_filename}",
+            'prompt': clean_prompt(selected['prompt'])
+        }
+        
+        print(f"✅ {failure_mode}")
+        print(f"   Source: {selected['image_path']}")
+        print(f"   Target: examples/{target_filename}")
+        print(f"   Prompt: {clean_prompt(selected['prompt'])[:80]}...")
+        print()
+    
+    return selected_examples, copy_commands, image_mappings
+
+def main():
+    # Configuration
+    json_path = "../diff/output_flux_prompt_full_oct12/metadata_flux_prompt_full_combined_all_captions_evaluated.json"
+    source_dir = "../diff"  # Base directory for source images
+    target_dir = "./static/images/examples"
+    
+    print("🔍 Loading JSON data...")
+    try:
+        data = load_json_data(json_path)
+        print(f"   Loaded {len(data)} items")
+    except FileNotFoundError:
+        print(f"❌ JSON file not found: {json_path}")
+        print("   Make sure you're running this from the finegrain.github.io directory")
+        return
+    
+    print("\n📋 Extracting failure examples...")
+    examples, copy_commands, mappings = extract_failure_examples(data, source_dir, target_dir)
+    
+    print(f"\n📊 Summary:")
+    print(f"   Found {len(examples)} failure examples")
+    print(f"   Need to copy {len(copy_commands)} images")
+    
+    # Write copy commands to file
+    with open("copy_images.sh", "w") as f:
+        f.write("#!/bin/bash\n")
+        f.write("# Copy failure example images to examples directory\n\n")
+        f.write(f"mkdir -p {target_dir}\n\n")
+        for cmd in copy_commands:
+            f.write(cmd + "\n")
+    
+    print(f"\n💾 Generated copy script: copy_images.sh")
+    print("   Run: chmod +x copy_images.sh && ./copy_images.sh")
+    
+    # Write JavaScript mappings
+    with open("image_mappings.json", "w") as f:
+        json.dump(mappings, f, indent=2)
+    
+    print(f"💾 Generated mappings: image_mappings.json")
+    print("\n🚀 Next steps:")
+    print("1. Run the copy script to copy images")
+    print("2. Update your JavaScript with the new im

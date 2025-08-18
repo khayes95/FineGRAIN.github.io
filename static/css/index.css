@@ -241,3 +241,18 @@ tr:hover {
 .sort-icon.active {
   opacity: 1;
 }
+
+/* VLM Table - Same color palette as T2I table */
+#vlmComparisonTable .has-text-centered {
+  color: black !important;
+  font-weight: bold;
+}
+
+#vlmComparisonTable td {
+  color: black !important;
+}
+
+/* Ensure all table cells have consistent bold text */
+.table td {
+  font-weight: bold;
+}

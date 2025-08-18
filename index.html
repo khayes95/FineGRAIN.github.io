@@ -176,42 +176,7 @@
 </section> -->
 
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-counting">
-          <img src="./static/images/examples/counts.png" alt="Counting failure example" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Counts/Multiple Objects:</strong> Models struggle with generating exact numbers</p>
-        </div>
-        <div class="item item-text">
-          <img src="./static/images/long_text_specific_0.png" alt="Text rendering failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Long Text Rendering:</strong> Accurate text generation remains challenging</p>
-        </div>
-        <div class="item item-anatomy">
-          <img src="./static/images/examples/human_action_0.png" alt="Anatomical failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Anatomical Accuracy:</strong> Human limb and torso representation errors</p>
-        </div>
-        <div class="item item-spatial">
-          <img src="./static/images/spatial_failure.png" alt="Spatial relations failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Spatial Relations:</strong> Difficulty with object positioning and relationships</p>
-        </div>
-        <div class="item item-color">
-          <img src="./static/images/color_failure.png" alt="Color attribute failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Color Binding:</strong> Incorrect color-object associations</p>
-        </div>
-        <div class="item item-physics">
-          <img src="./static/images/physics_failure.png" alt="Physics failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Physics:</strong> Violations of physical laws and realistic interactions</p>
-        </div>
-        <div class="item item-negation">
-          <img src="./static/images/negation_failure.png" alt="Negation failure" style="width: 100%; height: 300px; object-fit: cover;">
-          <p class="has-text-centered" style="margin-top: 10px;"><strong>Negation:</strong> Difficulty understanding "without" or "not" instructions</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 
 <section class="section">
@@ -344,30 +309,7 @@
 
 
     
-    <!-- Model Performance. -->
-    <div class="columns is-centered" id="leaderboard">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Model Performance Leaderboard</h2>
 
-        <div class="content has-text-justified">
-          <p>
-            Performance comparison across 5 T2I models on 27 failure modes. Scores represent success rates as judged by humans. We immediately see the benefits of taking a fine-grained approach - some categories that were simply lumped together actually have very different success rates.
-          </p>
-        </div>
-        
-        <div class="content has-text-centered">
-          <img src="./static/images/figures/t2i_model_compare.png" alt="T2I Model Performance Comparison" style="width: 100%; height: auto; max-width: 800px;">
-        </div>
-
-        <h3 class="title is-4">Key Findings</h3>
-        <div class="content has-text-justified">
-          <p>
-            All models fail completely to generate correct "Counts or Multiple Objects", revealing a systematic weakness in numerical reasoning. For example, "Six oval stones" could receive a poor score because it had the wrong number of stones OR because the stones were not oval - our evaluation separates these failure modes.
-          </p>
-        </div>
-
-      </div>
-    </div>
     <!--/ Model Performance. -->
 
   </div>
@@ -380,19 +322,42 @@
     
     <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
       <h2 class="title is-2 has-text-white">T2I Model Performance Comparison</h2>
-      <p class="subtitle is-4 has-text-white">Success rates (%) for 5 text-to-image models across all failure modes</p>
+      <p class="subtitle is-4 has-text-white">Success rates (%) for 9 text-to-image models across all failure modes</p>
     </div>
     
     <div style="background: white; padding: 20px; border-radius: 0 0 12px 12px; overflow-x: auto;">
       <table class="table is-fullwidth is-hoverable" id="modelComparisonTable">
         <thead>
           <tr style="background-color: #f8f9fa;">
-            <th style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 10;">Failure Mode</th>
-            <th class="has-text-centered">Flux</th>
-            <th class="has-text-centered">SD3.5</th>
-            <th class="has-text-centered">SD3.5-M</th>
-            <th class="has-text-centered">SD3-M</th>
-            <th class="has-text-centered">SD3-XL</th>
+            <th style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 10;">Model</th>
+            <th class="has-text-centered" style="background-color: #e8f4f8; border: 2px solid #3273dc;">Average</th>
+            <th class="has-text-centered">Cause-effect Relations</th>
+            <th class="has-text-centered">Action and Motion</th>
+            <th class="has-text-centered">Anatomical Accuracy</th>
+            <th class="has-text-centered">BG-FG Mismatch</th>
+            <th class="has-text-centered">Blending Styles</th>
+            <th class="has-text-centered">Color Binding</th>
+            <th class="has-text-centered">Counts or Multiple Objects</th>
+            <th class="has-text-centered">Abstract Concepts</th>
+            <th class="has-text-centered">Emotional Conveyance</th>
+            <th class="has-text-centered">FG-BG Relations</th>
+            <th class="has-text-centered">Human Action</th>
+            <th class="has-text-centered">Human Anatomy Moving</th>
+            <th class="has-text-centered">Long Text Specific</th>
+            <th class="has-text-centered">Negation</th>
+            <th class="has-text-centered">Opposite Relation</th>
+            <th class="has-text-centered">Perspective</th>
+            <th class="has-text-centered">Physics</th>
+            <th class="has-text-centered">Scaling</th>
+            <th class="has-text-centered">Shape Binding</th>
+            <th class="has-text-centered">Short Text Specific</th>
+            <th class="has-text-centered">Social Relations</th>
+            <th class="has-text-centered">Spatial Relations</th>
+            <th class="has-text-centered">Surreal</th>
+            <th class="has-text-centered">Tense and Aspect</th>
+            <th class="has-text-centered">Text Rendering Style</th>
+            <th class="has-text-centered">Text-Based</th>
+            <th class="has-text-centered">Texture Binding</th>
           </tr>
         </thead>
         <tbody id="modelComparisonBody">
@@ -407,54 +372,13 @@
           <li><strong>All models fail completely</strong> at counting objects (0% success)</li>
           <li><strong>Color binding</strong> is well-handled by most models (>90% except SD3-XL)</li>
           <li><strong>Text rendering</strong> varies dramatically between models</li>
+          <li><strong>New models</strong> (Kontext, Qwen-Img, Wan2.2, HiDream) are pending evaluation</li>
         </ul>
       </div>
     </div>
     
   </div>
 </section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">FineGRAIN vs. VQAScore</h2>
-    
-    <div class="columns is-centered">
-      <div class="column is-two-thirds">
-        <div class="content has-text-justified">
-          <p>
-            FineGRAIN achieves <strong>67.4% agreement</strong> with human annotations compared to <strong>57.7%</strong> for VQAScore - a significant 10% improvement in accuracy. While FineGRAIN achieves near-human performance for objective categories like "Counts or Multiple Objects" and "Long text specific", it performs less well on subjective categories like "Surreal."
-          </p>
-        </div>
-        
-        <div class="content has-text-centered">
-          <img src="./static/images/figures/agreement_comparison.pdf" alt="Agreement Comparison Chart" style="width: 100%; height: auto;">
-        </div>
-      </div>
-      
-      <div class="column">
-        <div class="content">
-          <h3 class="title is-4">Key Advantages</h3>
-          <div class="notification is-info is-light">
-            <p><strong>Boolean Scoring:</strong> Clear pass/fail determination for deployment pipelines</p>
-          </div>
-          <div class="notification is-success is-light">
-            <p><strong>Objective Focus:</strong> Emphasis on unambiguous criteria like counting and text accuracy</p>
-          </div>
-          <div class="notification is-warning is-light">
-            <p><strong>Interpretable Results:</strong> LLM judge provides reasoning for each evaluation</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="content has-text-justified">
-      <p>
-        <strong>VLMs Cannot Be Trusted:</strong> One finding that sharply differs from prior work is that we give all models very low scores for counting. This is because prior work has been lax at assessing whether models generate the exact right number of objects. VQAScore relies on the VLM to correctly determine whether "3 bananas" is in the image, but we show this approach is fundamentally flawed.
-      </p>
-    </div>
-  </div>
-</section>
-
 
 
 <!-- VLM Performance Comparison Table -->
@@ -556,33 +480,6 @@
 </section>
 
 
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Prompt Difficulty Scaling</h2>
-    
-    <div class="content has-text-justified">
-      <p>
-        A unique advantage of FineGRAIN is the ability to adjust evaluation difficulty programmatically. We demonstrate this with two failure modes: generating long text and counting multiple objects. Even the best-performing models have significant room for improvement as difficulty scales.
-      </p>
-    </div>
-
-    <div class="columns">
-      <div class="column">
-        <h3 class="title is-4">Text Length Scaling</h3>
-        <p>Performance drops dramatically as text length increases. Models that handle short phrases fail completely on paragraph-length text generation.</p>
-        <img src="./static/images/ablation/text_token_ablation.jpg" alt="Text Length Performance" style="width: 100%; height: auto;">
-      </div>
-      
-      <div class="column">
-        <h3 class="title is-4">Object Count Scaling</h3>
-        <p>Success rates plummet when asked to generate more than 3-4 objects. SDXL's counting performance drops sharply beyond very small numbers.</p>
-        <img src="./static/images/ablation/counting_distinct_model.jpg" alt="Counting Performance" style="width: 100%; height: auto;">
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <section class="section" id="BibTeX">
