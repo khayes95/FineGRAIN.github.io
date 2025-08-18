@@ -271,15 +271,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 </td>
                 <td class="has-text-centered ${best.name === 'Molmo' ? 'has-text-weight-bold' : ''}">
                     ${row.molmo.toFixed(1)}%
-                    ${best.name === 'Molmo' ? '🏆' : ''}
+                    ${best.name === 'Molmo' ? '' : ''}
                 </td>
                 <td class="has-text-centered ${best.name === 'InternVL3' ? 'has-text-weight-bold' : ''}">
                     ${row.internvl3.toFixed(1)}%
-                    ${best.name === 'InternVL3' ? '🏆' : ''}
+                    ${best.name === 'InternVL3' ? '' : ''}
                 </td>
                 <td class="has-text-centered ${best.name === 'Pixtral' ? 'has-text-weight-bold' : ''}">
                     ${row.pixtral.toFixed(1)}%
-                    ${best.name === 'Pixtral' ? '🏆' : ''}
+                    ${best.name === 'Pixtral' ? '' : ''}
                 </td>
                 <td class="has-text-centered has-text-weight-bold">
                     ${best.name}: ${best.score.toFixed(1)}%

@@ -271,15 +271,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 </td>
                 <td class="has-text-centered ${best.name === 'Molmo' ? 'has-text-weight-bold' : ''}">
                     ${row.molmo.toFixed(1)}%
-                    ${best.name === 'Molmo' ? '🏆' : ''}
+                    ${best.name === 'Molmo' ? '' : ''}
                 </td>
                 <td class="has-text-centered ${best.name === 'InternVL3' ? 'has-text-weight-bold' : ''}">
                     ${row.internvl3.toFixed(1)}%
-                    ${best.name === 'InternVL3' ? '🏆' : ''}
+                    ${best.name === 'InternVL3' ? '' : ''}
                 </td>
                 <td class="has-text-centered ${best.name === 'Pixtral' ? 'has-text-weight-bold' : ''}">
                     ${row.pixtral.toFixed(1)}%
-                    ${best.name === 'Pixtral' ? '🏆' : ''}
+                    ${best.name === 'Pixtral' ? '' : ''}
                 </td>
                 <td class="has-text-centered has-text-weight-bold">
                     ${best.name}: ${best.score.toFixed(1)}%
@@ -381,93 +381,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (vlmSortSelect) {
         vlmSortSelect.addEventListener('change', sortVlmData);
     }
-
-    function renderEnhancedModelComparisonTable() {
-        const tbody = document.getElementById('modelComparisonBody2');
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
-
-        // Enhanced color scheme
-        function getEnhancedScoreColor(score) {
-            if (score >= 80) return '#d4edda'; // Green
-            if (score >= 60) return '#d1ecf1'; // Light blue
-            if (score >= 40) return '#fff3cd'; // Yellow
-            if (score >= 20) return '#f8d7da'; // Light red
-            return '#f5c6cb'; // Red
-        }
-
-        const models = [
-            { 
-                name: "Flux", 
-                average: 51.04,
-                scores: [44.83, 52.00, 53.33, 76.00, 5.00, 93.33, 0.00, 92.31, 76.67, 86.21, 72.41, 79.31, 0.00, 25.00, 6.67, 33.33, 43.33, 43.33, 60.00, 64.00, 84.62, 50.00, 28.00, 57.69, 28.00, 79.31, 43.33]
-            },
-            { 
-                name: "SD3.5", 
-                average: 40.06,
-                scores: [36.84, 20.00, 33.33, 69.23, 10.34, 96.67, 0.00, 84.62, 46.67, 37.93, 68.97, 48.28, 0.00, 46.43, 6.67, 23.33, 16.67, 33.33, 50.00, 48.00, 65.38, 23.33, 44.00, 42.31, 4.00, 62.07, 63.33]
-            },
-            { 
-                name: "SD3.5-M", 
-                average: 30.56,
-                scores: [31.58, 16.00, 26.67, 73.08, 3.45, 93.33, 0.00, 88.46, 36.67, 34.48, 27.59, 17.24, 0.00, 46.43, 3.33, 20.00, 23.33, 26.67, 30.00, 24.00, 30.77, 16.67, 36.00, 38.46, 0.00, 27.59, 53.33]
-            },
-            { 
-                name: "SD3-M", 
-                average: 24.27,
-                scores: [27.59, 0.00, 6.67, 53.85, 13.79, 96.67, 0.00, 73.08, 16.67, 51.72, 13.79, 0.00, 0.00, 17.86, 0.00, 10.00, 26.67, 23.33, 30.00, 20.00, 7.69, 23.33, 36.00, 42.31, 0.00, 27.59, 36.67]
-            },
-            { 
-                name: "SD3-XL", 
-                average: 21.09,
-                scores: [21.05, 12.00, 26.67, 53.85, 3.45, 40.00, 0.00, 69.23, 33.33, 37.93, 44.83, 24.14, 0.00, 46.43, 0.00, 6.67, 16.67, 23.33, 3.33, 0.00, 34.62, 10.00, 12.00, 23.08, 0.00, 3.45, 23.33]
-            },
-            { 
-                name: "Kontext", 
-                average: "N/A",
-                scores: Array(27).fill("N/A")
-            },
-            { 
-                name: "Qwen-Img", 
-                average: "N/A",
-                scores: Array(27).fill("N/A")
-            },
-            { 
-                name: "Wan2.2", 
-                average: "N/A",
-                scores: Array(27).fill("N/A")
-            },
-            { 
-                name: "HiDream", 
-                average: "N/A",
-                scores: Array(27).fill("N/A")
-            }
-        ];
-
-        models.forEach(model => {
-            const row = document.createElement('tr');
-            
-            // Model name (sticky column)
-            let cellsHtml = `<td class="sticky-col"><strong>${model.name}</strong></td>`;
-            
-            // Average column (highlighted)
-            cellsHtml += `<td class="has-text-centered average-col">${model.average}</td>`;
-            
-            // All 27 failure mode scores
-            model.scores.forEach(score => {
-                const bgColor = score === "N/A" ? "#f0f0f0" : getEnhancedScoreColor(parseFloat(score));
-                cellsHtml += `<td class="has-text-centered" style="background-color: ${bgColor}; color: black; font-weight: bold;">${score}</td>`;
-            });
-            
-            row.innerHTML = cellsHtml;
-            tbody.appendChild(row);
-        });
-    }
-
-    // Initialize enhanced table
-    if (document.getElementById('modelComparisonBody2')) {
-        renderEnhancedModelComparisonTable();
-    }
-    
 });
