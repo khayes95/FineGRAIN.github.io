@@ -225,43 +225,157 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!tbody) return;
         
         tbody.innerHTML = '';
-
-        // Add average row first
-        const avgRow = document.createElement('tr');
-        avgRow.style.fontWeight = 'bold';
-        avgRow.style.backgroundColor = '#f8f9fa';
-        avgRow.innerHTML = `
-            <td style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 5;"><strong>Average</strong></td>
-            <td class="has-text-centered" style="background-color: ${getScoreColor(51.04)}; color: white; font-weight: bold;">51.04</td>
-            <td class="has-text-centered" style="background-color: ${getScoreColor(40.06)}; color: white; font-weight: bold;">40.06</td>
-            <td class="has-text-centered" style="background-color: ${getScoreColor(30.56)}; color: white; font-weight: bold;">30.56</td>
-            <td class="has-text-centered" style="background-color: ${getScoreColor(24.27)}; color: white; font-weight: bold;">24.27</td>
-            <td class="has-text-centered" style="background-color: ${getScoreColor(21.09)}; color: white; font-weight: bold;">21.09</td>
-        `;
-        tbody.appendChild(avgRow);
-
-        modelPerformanceData.forEach(row => {
-            const tableRow = document.createElement('tr');
-            tableRow.innerHTML = `
-                <td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;">
-                    <strong>${row.failureMode}</strong>
-                </td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.flux)}; color: white; font-weight: bold;">${row.flux}</td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.sd35)}; color: white; font-weight: bold;">${row.sd35}</td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.sd35m)}; color: white; font-weight: bold;">${row.sd35m}</td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.sd3m)}; color: white; font-weight: bold;">${row.sd3m}</td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.sd3xl)}; color: white; font-weight: bold;">${row.sd3xl}</td>
-            `;
-            tbody.appendChild(tableRow);
+    
+        // Define the models and their data exactly from the original table
+        const models = [
+            { 
+                name: "Flux", 
+                average: 51.04,
+                scores: [44.83, 52.00, 53.33, 76.00, 5.00, 93.33, 0.00, 92.31, 76.67, 86.21, 72.41, 79.31, 0.00, 25.00, 6.67, 33.33, 43.33, 43.33, 60.00, 64.00, 84.62, 50.00, 28.00, 57.69, 28.00, 79.31, 43.33]
+            },
+            { 
+                name: "SD3.5", 
+                average: 40.06,
+                scores: [36.84, 20.00, 33.33, 69.23, 10.34, 96.67, 0.00, 84.62, 46.67, 37.93, 68.97, 48.28, 0.00, 46.43, 6.67, 23.33, 16.67, 33.33, 50.00, 48.00, 65.38, 23.33, 44.00, 42.31, 4.00, 62.07, 63.33]
+            },
+            { 
+                name: "SD3.5-M", 
+                average: 30.56,
+                scores: [31.58, 16.00, 26.67, 73.08, 3.45, 93.33, 0.00, 88.46, 36.67, 34.48, 27.59, 17.24, 0.00, 46.43, 3.33, 20.00, 23.33, 26.67, 30.00, 24.00, 30.77, 16.67, 36.00, 38.46, 0.00, 27.59, 53.33]
+            },
+            { 
+                name: "SD3-M", 
+                average: 24.27,
+                scores: [27.59, 0.00, 6.67, 53.85, 13.79, 96.67, 0.00, 73.08, 16.67, 51.72, 13.79, 0.00, 0.00, 17.86, 0.00, 10.00, 26.67, 23.33, 30.00, 20.00, 7.69, 23.33, 36.00, 42.31, 0.00, 27.59, 36.67]
+            },
+            { 
+                name: "SD3-XL", 
+                average: 21.09,
+                scores: [21.05, 12.00, 26.67, 53.85, 3.45, 40.00, 0.00, 69.23, 33.33, 37.93, 44.83, 24.14, 0.00, 46.43, 0.00, 6.67, 16.67, 23.33, 3.33, 0.00, 34.62, 10.00, 12.00, 23.08, 0.00, 3.45, 23.33]
+            },
+            { 
+                name: "Kontext", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "Qwen-Img", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "Wan2.2", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "HiDream", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            }
+        ];
+    
+        models.forEach(model => {
+            const row = document.createElement('tr');
+            
+            // Model name (sticky column)
+            let cellsHtml = `<td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;"><strong>${model.name}</strong></td>`;
+            
+            // Average column (highlighted)
+            const avgBgColor = model.average === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(model.average));
+            cellsHtml += `<td class="has-text-centered" style="background-color: ${avgBgColor}; border: 2px solid #3273dc; color: black; font-weight: bold;">${model.average}</td>`;
+            
+            // All 27 failure mode scores
+            model.scores.forEach(score => {
+                const bgColor = score === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(score));
+                cellsHtml += `<td class="has-text-centered" style="background-color: ${bgColor}; color: black;">${score}</td>`;
+            });
+            
+            row.innerHTML = cellsHtml;
+            tbody.appendChild(row);
         });
     }
-
+    function renderModelComparisonTable2() {
+        const tbody = document.getElementById('modelComparisonBody2');
+        if (!tbody) return;
+        
+        tbody.innerHTML = '';
+    
+        // Define the models and their data exactly from the original table
+        const models = [
+            { 
+                name: "Flux", 
+                average: 51.04,
+                scores: [44.83, 52.00, 53.33, 76.00, 5.00, 93.33, 0.00, 92.31, 76.67, 86.21, 72.41, 79.31, 0.00, 25.00, 6.67, 33.33, 43.33, 43.33, 60.00, 64.00, 84.62, 50.00, 28.00, 57.69, 28.00, 79.31, 43.33]
+            },
+            { 
+                name: "SD3.5", 
+                average: 40.06,
+                scores: [36.84, 20.00, 33.33, 69.23, 10.34, 96.67, 0.00, 84.62, 46.67, 37.93, 68.97, 48.28, 0.00, 46.43, 6.67, 23.33, 16.67, 33.33, 50.00, 48.00, 65.38, 23.33, 44.00, 42.31, 4.00, 62.07, 63.33]
+            },
+            { 
+                name: "SD3.5-M", 
+                average: 30.56,
+                scores: [31.58, 16.00, 26.67, 73.08, 3.45, 93.33, 0.00, 88.46, 36.67, 34.48, 27.59, 17.24, 0.00, 46.43, 3.33, 20.00, 23.33, 26.67, 30.00, 24.00, 30.77, 16.67, 36.00, 38.46, 0.00, 27.59, 53.33]
+            },
+            { 
+                name: "SD3-M", 
+                average: 24.27,
+                scores: [27.59, 0.00, 6.67, 53.85, 13.79, 96.67, 0.00, 73.08, 16.67, 51.72, 13.79, 0.00, 0.00, 17.86, 0.00, 10.00, 26.67, 23.33, 30.00, 20.00, 7.69, 23.33, 36.00, 42.31, 0.00, 27.59, 36.67]
+            },
+            { 
+                name: "SD3-XL", 
+                average: 21.09,
+                scores: [21.05, 12.00, 26.67, 53.85, 3.45, 40.00, 0.00, 69.23, 33.33, 37.93, 44.83, 24.14, 0.00, 46.43, 0.00, 6.67, 16.67, 23.33, 3.33, 0.00, 34.62, 10.00, 12.00, 23.08, 0.00, 3.45, 23.33]
+            },
+            { 
+                name: "Kontext", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "Qwen-Img", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "Wan2.2", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            },
+            { 
+                name: "HiDream", 
+                average: "N/A",
+                scores: Array(27).fill("N/A")
+            }
+        ];
+    
+        models.forEach(model => {
+            const row = document.createElement('tr');
+            
+            // Model name (sticky column)
+            let cellsHtml = `<td class="sticky-col"><strong>${model.name}</strong></td>`;
+            
+            // Average column (highlighted)
+            const avgBgColor = model.average === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(model.average));
+            cellsHtml += `<td class="has-text-centered average-col" style="background-color: ${avgBgColor}; color: black;">${model.average}</td>`;
+            
+            // All 27 failure mode scores
+            model.scores.forEach(score => {
+                const bgColor = score === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(score));
+                cellsHtml += `<td class="has-text-centered" style="background-color: ${bgColor}; color: black;">${score}</td>`;
+            });
+            
+            row.innerHTML = cellsHtml;
+            tbody.appendChild(row);
+        });
+    }
     function renderVlmComparisonTable() {
         const tbody = document.getElementById('vlmComparisonBody');
         if (!tbody) return;
         
         tbody.innerHTML = '';
-
+    
         filteredVlmData.forEach(row => {
             const best = getBestVlm(row.molmo, row.internvl3, row.pixtral);
             const tableRow = document.createElement('tr');
@@ -269,19 +383,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;">
                     <strong>${row.failureMode}</strong>
                 </td>
-                <td class="has-text-centered ${best.name === 'Molmo' ? 'has-text-weight-bold' : ''}">
+                <td class="has-text-centered" style="background-color: ${getScoreColor(row.molmo)}; color: black; font-weight: ${best.name === 'Molmo' ? 'bold' : 'normal'};">
                     ${row.molmo.toFixed(1)}%
-                    ${best.name === 'Molmo' ? '' : ''}
                 </td>
-                <td class="has-text-centered ${best.name === 'InternVL3' ? 'has-text-weight-bold' : ''}">
+                <td class="has-text-centered" style="background-color: ${getScoreColor(row.internvl3)}; color: black; font-weight: ${best.name === 'InternVL3' ? 'bold' : 'normal'};">
                     ${row.internvl3.toFixed(1)}%
-                    ${best.name === 'InternVL3' ? '' : ''}
                 </td>
-                <td class="has-text-centered ${best.name === 'Pixtral' ? 'has-text-weight-bold' : ''}">
+                <td class="has-text-centered" style="background-color: ${getScoreColor(row.pixtral)}; color: black; font-weight: ${best.name === 'Pixtral' ? 'bold' : 'normal'};">
                     ${row.pixtral.toFixed(1)}%
-                    ${best.name === 'Pixtral' ? '' : ''}
                 </td>
-                <td class="has-text-centered has-text-weight-bold">
+                <td class="has-text-centered" style="background-color: ${getScoreColor(best.score)}; color: black; font-weight: bold;">
                     ${best.name}: ${best.score.toFixed(1)}%
                 </td>
             `;
@@ -355,6 +466,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (document.getElementById('modelComparisonBody')) {
         renderModelComparisonTable();
+    }
+    if (document.getElementById('modelComparisonBody2')) {
+        renderModelComparisonTable2();
     }
     if (document.getElementById('vlmComparisonBody')) {
         renderVlmComparisonTable();
