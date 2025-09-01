@@ -315,16 +315,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td style="position: sticky; left: 0; background-color: white; z-index: 5; border-right: 1px solid #ddd;">
                     <strong>${row.failureMode}</strong>
                 </td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.molmo)}; color: black; font-weight: ${best.name === 'Molmo' ? 'bold' : 'normal'};">
+                <td class="has-text-centered" style="background-color: ${getScoreColorMuted(row.molmo)}; color: #495057; border: 1px solid #dee2e6; font-weight: ${best.name === 'Molmo' ? 'bold' : 'normal'};">
                     ${row.molmo.toFixed(1)}%
                 </td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.internvl3)}; color: black; font-weight: ${best.name === 'InternVL3' ? 'bold' : 'normal'};">
+                <td class="has-text-centered" style="background-color: ${getScoreColorMuted(row.internvl3)}; color: #495057; border: 1px solid #dee2e6; font-weight: ${best.name === 'InternVL3' ? 'bold' : 'normal'};">
                     ${row.internvl3.toFixed(1)}%
                 </td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(row.pixtral)}; color: black; font-weight: ${best.name === 'Pixtral' ? 'bold' : 'normal'};">
+                <td class="has-text-centered" style="background-color: ${getScoreColorMuted(row.pixtral)}; color: #495057; border: 1px solid #dee2e6; font-weight: ${best.name === 'Pixtral' ? 'bold' : 'normal'};">
                     ${row.pixtral.toFixed(1)}%
                 </td>
-                <td class="has-text-centered" style="background-color: ${getScoreColor(best.score)}; color: black; font-weight: bold;">
+                <td class="has-text-centered" style="background-color: ${getScoreColorMuted(best.score)}; color: #495057; border: 1px solid #dee2e6; font-weight: bold;">
                     ${best.name}: ${best.score.toFixed(1)}%
                 </td>
             `;
