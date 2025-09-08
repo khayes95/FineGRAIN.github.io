@@ -286,3 +286,22 @@ tr:hover {
   z-index: 10;
   border-right: 2px solid #ddd;
 }
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.sortable-header:hover {
+  background-color: #e9ecef;
+}
+
+.sort-indicator {
+  margin-left: 5px;
+  opacity: 0.5;
+  font-size: 0.8em;
+}
+
+.sort-indicator.active {
+  opacity: 1;
+}
