@@ -483,7 +483,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (vlmSortSelect) {
         vlmSortSelect.addEventListener('change', sortVlmData);
     }
-   
+
+    // Add click listener for sortable table headers - MOVED INSIDE
     document.addEventListener('click', function(e) {
         if (e.target.closest('#modelComparisonTable2 .sortable-header')) {
             const header = e.target.closest('.sortable-header');
@@ -491,4 +492,5 @@ document.addEventListener('DOMContentLoaded', function() {
             sortTable(sortColumn);
         }
     });
+    
 });
