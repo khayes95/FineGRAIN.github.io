@@ -256,3 +256,33 @@ tr:hover {
 .table td {
   font-weight: bold;
 }
+
+/* Fix Enhanced table scrolling */
+.enhanced-table .table-container {
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-table #modelComparisonTable2 {
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 2000px; /* Force horizontal scroll */
+}
+
+.enhanced-table #modelComparisonTable2 th,
+.enhanced-table #modelComparisonTable2 td {
+  white-space: nowrap;
+  min-width: 80px; /* Ensure columns don't get too narrow */
+}
+
+.enhanced-table .sticky-col {
+  position: sticky;
+  left: 0;
+  background-color: white;
+  z-index: 10;
+  border-right: 2px solid #ddd;
+}
