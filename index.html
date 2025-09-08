@@ -300,14 +300,76 @@
 
 </section>
 
-
+<!-- Model Performance Comparison Table -->
+<section class="section">
+  <div class="container is-fluid">
+    
+    <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+      <h2 class="title is-2 has-text-white">T2I Model Performance Comparison</h2>
+      <p class="subtitle is-4 has-text-white">Success rates (%) for 9 text-to-image models across all failure modes</p>
+    </div>
+    
+    <div style="background: white; padding: 20px; border-radius: 0 0 12px 12px; overflow-x: auto;">
+      <table class="table is-fullwidth is-hoverable" id="modelComparisonTable">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="position: sticky; left: 0; background-color: #f8f9fa; z-index: 10;">Model</th>
+            <th class="has-text-centered" style="background-color: #e8f4f8; border: 2px solid #3273dc;">Average</th>
+            <th class="has-text-centered">Cause-effect Relations</th>
+            <th class="has-text-centered">Action and Motion</th>
+            <th class="has-text-centered">Anatomical Accuracy</th>
+            <th class="has-text-centered">BG-FG Mismatch</th>
+            <th class="has-text-centered">Blending Styles</th>
+            <th class="has-text-centered">Color Binding</th>
+            <th class="has-text-centered">Counts or Multiple Objects</th>
+            <th class="has-text-centered">Abstract Concepts</th>
+            <th class="has-text-centered">Emotional Conveyance</th>
+            <th class="has-text-centered">FG-BG Relations</th>
+            <th class="has-text-centered">Human Action</th>
+            <th class="has-text-centered">Human Anatomy Moving</th>
+            <th class="has-text-centered">Long Text Specific</th>
+            <th class="has-text-centered">Negation</th>
+            <th class="has-text-centered">Opposite Relation</th>
+            <th class="has-text-centered">Perspective</th>
+            <th class="has-text-centered">Physics</th>
+            <th class="has-text-centered">Scaling</th>
+            <th class="has-text-centered">Shape Binding</th>
+            <th class="has-text-centered">Short Text Specific</th>
+            <th class="has-text-centered">Social Relations</th>
+            <th class="has-text-centered">Spatial Relations</th>
+            <th class="has-text-centered">Surreal</th>
+            <th class="has-text-centered">Tense and Aspect</th>
+            <th class="has-text-centered">Text Rendering Style</th>
+            <th class="has-text-centered">Text-Based</th>
+            <th class="has-text-centered">Texture Binding</th>
+          </tr>
+        </thead>
+        <tbody id="modelComparisonBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+      
+      <div class="notification is-info is-light" style="margin-top: 20px;">
+        <p><strong>Key Insights:</strong></p>
+        <ul>
+          <li><strong>Flux</strong> leads overall with 51.04% average success rate</li>
+          <li><strong>All models fail completely</strong> at counting objects (0% success)</li>
+          <li><strong>Color binding</strong> is well-handled by most models (>90% except SD3-XL)</li>
+          <li><strong>Text rendering</strong> varies dramatically between models</li>
+          <li><strong>New models</strong> (Kontext, Qwen-Img, Wan2.2, HiDream) are pending evaluation</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</section>
 
 <!-- Enhanced Model Performance Comparison Table -->
 <section class="section enhanced-table">
   <div class="container is-fluid">
     
     <div style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
-      <h2 class="title is-2 has-text-white">T2I Model Performance Comparison</h2>
+      <h2 class="title is-2 has-text-white">Enhanced T2I Model Performance Comparison</h2>
       
     </div>
     
