@@ -483,4 +483,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (vlmSortSelect) {
         vlmSortSelect.addEventListener('change', sortVlmData);
     }
+   
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('#modelComparisonTable2 .sortable-header')) {
+            const header = e.target.closest('.sortable-header');
+            const sortColumn = header.getAttribute('data-sort');
+            sortTable(sortColumn);
+        }
+    });
 });
