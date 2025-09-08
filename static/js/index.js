@@ -276,46 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function renderModelComparisonTable() {
-        const tbody = document.getElementById('modelComparisonBody');
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
     
-        // MODELS AS ROWS - This is the key fix!
-        const models = [
-            { name: "Flux Kontext", average: 33.7, scores: [20.7, 8.0, 3.3, 69.2, 13.8, 63.3, 0.0, 15.4, 46.7, 31.0, 79.3, 72.4, 8.0, 10.7, 43.3, 60.0, 3.3, 6.7, 16.7, 0.0, 65.4, 40.0, 80.0, 30.8, 12.0, 55.2, 50.0] },
-            { name: "Flux Dev", average: 35.9, scores: [6.9, 8.0, 3.3, 50.0, 3.4, 60.0, 0.0, 19.2, 40.0, 20.7, 72.4, 69.0, 4.0, 7.1, 46.7, 60.0, 3.3, 6.7, 33.3, 4.2, 76.9, 23.3, 92.0, 34.6, 12.0, 64.3, 30.0] },
-            { name: "SD3.5", average: 27.6, scores: [27.6, 36.0, 0.0, 65.4, 6.9, 50.0, 0.0, 19.2, 50.0, 27.6, 75.9, 75.9, 8.0, 10.7, 40.0, 40.0, 0.0, 0.0, 30.0, 0.0, 84.6, 26.7, 92.0, 38.5, 12.0, 64.3, 50.0] },
-            { name: "SD3.5-M", average: 28.5, scores: [13.8, 8.0, 0.0, 69.2, 6.9, 60.0, 0.0, 26.9, 46.7, 24.1, 69.0, 69.0, 0.0, 7.1, 43.3, 26.7, 6.7, 6.7, 16.7, 8.0, 76.9, 30.0, 84.0, 42.3, 12.0, 57.1, 53.3] },
-            { name: "SD3-M", average: 28.8, scores: [17.2, 20.0, 3.3, 69.2, 3.4, 63.3, 0.0, 23.1, 43.3, 37.9, 82.8, 72.4, 0.0, 7.1, 46.7, 33.3, 0.0, 6.7, 23.3, 4.0, 80.8, 30.0, 84.0, 46.2, 8.0, 53.6, 46.7] },
-            { name: "SD3-XL", average: 26.2, scores: [17.2, 12.0, 0.0, 46.2, 6.9, 23.3, 0.0, 26.9, 46.7, 34.5, 69.0, 75.9, 4.0, 7.1, 53.3, 50.0, 0.0, 3.3, 6.7, 4.8, 73.1, 16.7, 64.0, 34.6, 8.0, 24.1, 36.7] },
-            { name: "Qwen", average: 39.4, scores: [31.0, 40.0, 0.0, 84.6, 20.7, 73.3, 0.0, 19.2, 36.7, 34.5, 51.7, 75.9, 32.0, 10.7, 33.3, 60.0, 0.0, 6.7, 43.3, 8.0, 92.3, 40.0, 88.0, 46.2, 16.0, 78.6, 50.0] },
-            { name: "HiDream", average: 37.3, scores: [17.2, 32.0, 0.0, 73.1, 13.8, 66.7, 0.0, 19.2, 40.0, 48.3, 69.0, 62.1, 8.0, 10.7, 46.7, 56.7, 3.3, 10.0, 43.3, 4.0, 84.6, 36.7, 92.0, 34.6, 16.0, 58.6, 62.1] },
-            { name: "Gemini Image", average: 37.80, scores: [37.93, 40.00, 0.00, 80.77, 25.00, 66.67, 3.45, 26.92, 48.28, 34.48, 65.52, 62.07, 8.33, 10.71, 46.67, 58.62, 6.67, 10.00, 20.00, 4.00, 88.46, 36.67, 72.00, 50.00, 12.50, 71.43, 36.67] },
-            { name: "SeeDream", average: 37.32, scores: [27.59, 29.17, 0.00, 80.77, 6.90, 70.00, 3.57, 34.62, 50.00, 20.69, 65.52, 75.00, 4.00, 3.57, 40.00, 76.67, 3.45, 6.67, 40.00, 0.00, 96.15, 30.00, 88.00, 48.00, 12.00, 59.26, 40.00] },
-            { name: "Wan2.2", average: 31.44, scores: [13.79, 16.00, 0.00, 76.92, 3.45, 50.00, 0.00, 11.54, 43.33, 17.24, 68.97, 75.86, 4.00, 7.14, 33.33, 66.67, 3.33, 3.33, 30.00, 0.00, 61.54, 30.00, 80.00, 42.31, 16.00, 48.28, 43.33] }
-        ];
-    
-        // Render each MODEL as a row
-        models.forEach(model => {
-            const row = document.createElement('tr');
-            let cellsHtml = `<td style="position: sticky; left: 0; background-color: white; z-index: 5;"><strong>${model.name}</strong></td>`;
-            
-            // Average column
-            const avgBgColor = model.average === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(model.average));
-            cellsHtml += `<td style="background-color: ${avgBgColor}; border: 2px solid #3273dc; color: black;">${model.average}</td>`;
-            
-            // All failure mode scores
-            model.scores.forEach(score => {
-                const bgColor = score === "N/A" ? "#f0f0f0" : getScoreColor(parseFloat(score));
-                cellsHtml += `<td style="background-color: ${bgColor}; color: black;">${score}</td>`;
-            });
-            
-            row.innerHTML = cellsHtml;
-            tbody.appendChild(row);
-        });
-    }
         function renderModelComparisonTable2() {
             const tbody = document.getElementById('modelComparisonBody2');
             if (!tbody) return;
