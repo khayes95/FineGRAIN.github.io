@@ -83,6 +83,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges</h1>
+          <p class="subtitle is-4" style="color: #3273dc; font-weight: 600; margin-top: 1rem;">FineGRAIN Bench will appear as a Spotlight Paper at NeurIPS 2025</p>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="#">Kevin David Hayes</a><sup>1</sup>,</span>
@@ -203,102 +204,6 @@
 </section>
 
 
-<section class="section">
-  <div class="container is-fluid">
-
-
-    <!-- Full Width Failure Modes Section -->
-    <section class="section" style="background: #f8f9fa;">
-      <div class="container is-fluid">
-        
-        <!-- Header with purple gradient -->
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
-          <h2 class="title is-2 has-text-white">FineGRAIN: 27 Failure Modes</h2>
-          <p class="subtitle is-4 has-text-white">Comprehensive evaluation framework for Text-to-Image models</p>
-        </div>
-        
-        <!-- Controls -->
-        <div class="filter-controls" style="background: white; padding: 20px; margin-bottom: 0;">
-          <div class="columns">
-            <div class="column">
-              <div class="field">
-                <label class="label">Search Failure Modes</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="text" id="searchInput" placeholder="Search by name, description, or prompt...">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-search"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="field">
-                <label class="label">Filter by Difficulty</label>
-                <div class="control">
-                  <div class="select">
-                    <select id="difficultyFilter">
-                      <option value="all">All Difficulties</option>
-                      <option value="high">High Failure Rate (>70%)</option>
-                      <option value="medium">Medium Failure Rate (30-70%)</option>
-                      <option value="low">Low Failure Rate (<30%)</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Table -->
-        <div class="table-container" style="background: white; border-radius: 0 0 12px 12px;">
-          <table class="table is-fullwidth is-hoverable" style="margin-bottom: 0;">
-            <thead>
-              <tr>
-                <th class="sortable" data-sort="name" style="cursor: pointer; background-color: #f8f9fa;">
-                  Failure Mode
-                  <i class="fas fa-sort sort-icon" id="sort-name"></i>
-                </th>
-                <th class="sortable" data-sort="rate" style="cursor: pointer; background-color: #f8f9fa;">
-                  Failure Rate
-                  <i class="fas fa-sort-down sort-icon active" id="sort-rate"></i>
-                </th>
-                <th style="background-color: #f8f9fa;">Description</th>
-                <th style="background-color: #f8f9fa;">Sample Prompt</th>
-              </tr>
-            </thead>
-            <tbody id="failureModeTable">
-              <!-- Table rows populated by JavaScript -->
-            </tbody>
-          </table>
-        </div>
-        
-        <!-- Help text -->
-        <div class="notification is-info is-light" style="margin-top: 30px;">
-          <p><strong>How to read this table:</strong></p>
-          <ul>
-            <li><strong>Failure Rate:</strong> Percentage of images that contain the failure mode (higher = more challenging)</li>
-            <li><strong>Sample Prompts:</strong> Real prompts used in our evaluation to elicit specific failure modes</li>
-            <li><strong>Color coding:</strong> <span class="failure-rate high-failure" style="background-color: #ff3860; color: white; padding: 2px 6px; border-radius: 4px;">Red (>70%)</span> = Very challenging, <span class="failure-rate medium-failure" style="background-color: #ffdd57; color: #333; padding: 2px 6px; border-radius: 4px;">Yellow (30-70%)</span> = Moderate, <span class="failure-rate low-failure" style="background-color: #23d160; color: white; padding: 2px 6px; border-radius: 4px;">Green (<30%)</span> = Less challenging</li>
-          </ul>
-        </div>
-        
-      </div>
-    </section>
-    
-    <div class="container is-fluid"> <!-- Restart container for next sections -->
-      <div class="columns is-centered">
-    </div>
-    <!--/ Failure Modes. -->
-
-
-
-    
-
-    <!--/ Model Performance. -->
-
-  </div>
-
-</section>
 
 
 <!-- Enhanced Model Performance Comparison Table -->
@@ -316,6 +221,7 @@
           <thead>
             <tr>
               <th class="sticky-col-header">Model</th>
+              <th class="sticky-col-header">Company</th>
               <th class="has-text-centered average-col average-col-header sortable-header" data-sort="average">
                 Average <span class="sort-indicator active">▼</span>
               </th>
@@ -463,6 +369,83 @@
 </section>
 
 
+<!-- Full Width Failure Modes Section -->
+<section class="section" style="background: #f8f9fa;">
+  <div class="container is-fluid">
+
+    <!-- Header with purple gradient -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+      <h2 class="title is-2 has-text-white">FineGRAIN: 27 Failure Modes</h2>
+      <p class="subtitle is-4 has-text-white">Comprehensive evaluation framework for Text-to-Image models</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="filter-controls" style="background: white; padding: 20px; margin-bottom: 0;">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">Search Failure Modes</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" id="searchInput" placeholder="Search by name, description, or prompt...">
+              <span class="icon is-small is-left">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">Filter by Difficulty</label>
+            <div class="control">
+              <div class="select">
+                <select id="difficultyFilter">
+                  <option value="all">All Difficulties</option>
+                  <option value="high">High Failure Rate (>70%)</option>
+                  <option value="medium">Medium Failure Rate (30-70%)</option>
+                  <option value="low">Low Failure Rate (<30%)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container" style="background: white; border-radius: 0 0 12px 12px;">
+      <table class="table is-fullwidth is-hoverable" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th class="sortable" data-sort="name" style="cursor: pointer; background-color: #f8f9fa;">
+              Failure Mode
+              <i class="fas fa-sort sort-icon" id="sort-name"></i>
+            </th>
+            <th class="sortable" data-sort="rate" style="cursor: pointer; background-color: #f8f9fa;">
+              Failure Rate
+              <i class="fas fa-sort-down sort-icon active" id="sort-rate"></i>
+            </th>
+            <th style="background-color: #f8f9fa;">Description</th>
+            <th style="background-color: #f8f9fa;">Sample Prompt</th>
+          </tr>
+        </thead>
+        <tbody id="failureModeTable">
+          <!-- Table rows populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Help text -->
+    <div class="notification is-info is-light" style="margin-top: 30px;">
+      <p><strong>How to read this table:</strong></p>
+      <ul>
+        <li><strong>Failure Rate:</strong> Percentage of images that contain the failure mode (higher = more challenging)</li>
+        <li><strong>Sample Prompts:</strong> Real prompts used in our evaluation to elicit specific failure modes</li>
+        <li><strong>Color coding:</strong> <span class="failure-rate high-failure" style="background-color: #ff3860; color: white; padding: 2px 6px; border-radius: 4px;">Red (>70%)</span> = Very challenging, <span class="failure-rate medium-failure" style="background-color: #ffdd57; color: #333; padding: 2px 6px; border-radius: 4px;">Yellow (30-70%)</span> = Moderate, <span class="failure-rate low-failure" style="background-color: #23d160; color: white; padding: 2px 6px; border-radius: 4px;">Green (<30%)</span> = Less challenging</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
 
 
 <section class="section" id="BibTeX">
