@@ -191,10 +191,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Original color scheme (keep for first table)
     function getScoreColor(score) {
         if (score >= 80) return '#23d160'; // Green
-        if (score >= 60) return '#ffdd57'; // Yellow  
+        if (score >= 60) return '#ffdd57'; // Yellow
         if (score >= 40) return '#ff9f43'; // Orange
         if (score >= 20) return '#ff6b6b'; // Light red
         return '#ff3860'; // Red
+    }
+
+    // Color scheme for failure rates (inverted - higher failure rates are worse)
+    function getFailureRateColor(rate) {
+        if (rate >= 70) return '#ff3860'; // Red (high failure - bad)
+        if (rate >= 30) return '#ffdd57'; // Yellow (medium failure)
+        return '#23d160'; // Green (low failure - good)
     }
 
     // New muted color scheme for Enhanced table
@@ -268,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><span style="font-weight: bold; color: #3273dc;">${mode.name}</span></td>
-                <td><span class="failure-rate ${getFailureRateClass(mode.rate)}" style="font-weight: bold; padding: 4px 8px; border-radius: 4px; color: white; background-color: ${getScoreColor(mode.rate)};">${mode.rate}%</span></td>
+                <td><span class="failure-rate ${getFailureRateClass(mode.rate)}" style="font-weight: bold; padding: 4px 8px; border-radius: 4px; color: white; background-color: ${getFailureRateColor(mode.rate)};">${mode.rate}%</span></td>
                 <td><div style="font-size: 0.95em; line-height: 1.4;">${mode.description}</div></td>
                 <td><div style="font-style: italic; font-size: 0.9em; line-height: 1.3; color: #666;">"${mode.prompt}"</div></td>
             `;
