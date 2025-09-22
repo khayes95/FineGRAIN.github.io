@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     { name: "Qwen", company: "Alibaba", average: 39.4, scores: [31.0, 40.0, 0.0, 84.6, 20.7, 73.3, 0.0, 19.2, 36.7, 34.5, 51.7, 75.9, 32.0, 10.7, 33.3, 60.0, 0.0, 6.7, 43.3, 8.0, 92.3, 40.0, 88.0, 46.2, 16.0, 78.6, 50.0] },
                     { name: "HiDream", company: "HiDream.ai", average: 37.3, scores: [17.2, 32.0, 0.0, 73.1, 13.8, 66.7, 0.0, 19.2, 40.0, 48.3, 69.0, 62.1, 8.0, 10.7, 46.7, 56.7, 3.3, 10.0, 43.3, 4.0, 84.6, 36.7, 92.0, 34.6, 16.0, 58.6, 62.1] },
                     { name: "Gemini Image*", company: "Google", average: 37.80, scores: [37.93, 40.00, 0.00, 80.77, 25.00, 66.67, 3.45, 26.92, 48.28, 34.48, 65.52, 62.07, 8.33, 10.71, 46.67, 58.62, 6.67, 10.00, 20.00, 4.00, 88.46, 36.67, 72.00, 50.00, 12.50, 71.43, 36.67] },
-                    { name: "SeeDream", company: "Tencent", average: 37.32, scores: [27.59, 29.17, 0.00, 80.77, 6.90, 70.00, 3.57, 34.62, 50.00, 20.69, 65.52, 75.00, 4.00, 3.57, 40.00, 76.67, 3.45, 6.67, 40.00, 0.00, 96.15, 30.00, 88.00, 48.00, 12.00, 59.26, 40.00] },
+                    { name: "SeeDream 3", company: "Tencent", average: 37.32, scores: [27.59, 29.17, 0.00, 80.77, 6.90, 70.00, 3.57, 34.62, 50.00, 20.69, 65.52, 75.00, 4.00, 3.57, 40.00, 76.67, 3.45, 6.67, 40.00, 0.00, 96.15, 30.00, 88.00, 48.00, 12.00, 59.26, 40.00] },
                     { name: "Wan2.2*", company: "ByteDance", average: 31.44, scores: [13.79, 16.00, 0.00, 76.92, 3.45, 50.00, 0.00, 11.54, 43.33, 17.24, 68.97, 75.86, 4.00, 7.14, 33.33, 66.67, 3.33, 3.33, 30.00, 0.00, 61.54, 30.00, 80.00, 42.31, 16.00, 48.28, 43.33] },
                     { name: "SD v1.5", company: "Stability AI", average: 15.97, scores: [13.79, 8.00, 0.00, 30.77, 6.90, 0.00, 0.00, 7.69, 16.67, 17.24, 41.38, 37.93, 4.00, 7.14, 23.33, 40.00, 0.00, 0.00, 6.67, 0.00, 15.38, 13.33, 56.00, 23.08, 8.00, 13.79, 20.00] },
                     { name: "SD 2.1", company: "Stability AI", average: 18.68, scores: [6.90, 0.00, 0.00, 38.46, 6.90, 16.67, 0.00, 7.69, 16.67, 13.79, 41.38, 55.17, 4.00, 7.14, 36.67, 50.00, 0.00, 0.00, 3.33, 0.00, 30.77, 10.00, 76.00, 30.77, 4.00, 20.69, 30.00] }
@@ -354,10 +354,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
         
+            // Company website mapping
+            const companyLinks = {
+                "Black Forest Labs": "https://blackforestlabs.ai/",
+                "OpenAI": "https://openai.com/",
+                "Stability AI": "https://stability.ai/",
+                "Alibaba": "https://www.alibabacloud.com/",
+                "HiDream.ai": "https://hidream.ai/",
+                "Google": "https://deepmind.google/",
+                "Tencent": "https://ai.tencent.com/",
+                "ByteDance": "https://www.bytedance.com/"
+            };
+
             modelsData.forEach(model => {
                 const row = document.createElement('tr');
                 let cellsHtml = `<td class="sticky-col"><strong>${model.name}</strong></td>`;
-                cellsHtml += `<td class="sticky-col" style="color: #666; font-size: 0.9em;">${model.company}</td>`;
+
+                // Add hyperlink to company name
+                const companyUrl = companyLinks[model.company];
+                const companyCell = companyUrl
+                    ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="color: #3273dc; text-decoration: none; font-size: 0.9em;">${model.company}</a>`
+                    : model.company;
+                cellsHtml += `<td class="sticky-col" style="color: #666; font-size: 0.9em;">${companyCell}</td>`;
 
                 const avgBgColor = model.average === "N/A" ? "#f8f9fa" : "#e8f4f8";
                 cellsHtml += `<td class="has-text-centered" style="background: linear-gradient(135deg, #e8f4f8, #d1ecf1); border: 1px solid #a8d0e6; color: #2c3e50; font-weight: bold; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">${model.average}</td>`;
