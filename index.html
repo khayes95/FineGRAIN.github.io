@@ -42,39 +42,6 @@
 </head>
 <body>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://goldstein-lab.umd.edu">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://goldstein-lab.umd.edu">
-            Goldstein Lab
-          </a>
-          <a class="navbar-item" href="https://umd.edu">
-            University of Maryland
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav>
 
 
 <section class="hero">
@@ -109,7 +76,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2024.XXXXX"
+                <a href="https://arxiv.org/pdf/2512.02161"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -118,7 +85,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2024.XXXXX"
+                <a href="https://arxiv.org/abs/2512.02161"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -144,16 +111,6 @@
                       <i class="far fa-images"></i>
                   </span>
                   <span>Dataset</span>
-                  </a>
-              </span>
-              <!-- Leaderboard Link. -->
-              <span class="link-block">
-                <a href="#leaderboard"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-trophy"></i>
-                  </span>
-                  <span>Leaderboard</span>
                   </a>
               </span>
             </div>
@@ -221,7 +178,7 @@
           <thead>
             <tr>
               <th class="sticky-col-header">Model</th>
-              <th class="sticky-col-header">Company</th>
+              <th class="has-text-centered sortable-header" data-sort="company">Company <span class="sort-indicator">▼</span></th>
               <th class="has-text-centered average-col average-col-header sortable-header" data-sort="average">
                 Average <span class="sort-indicator active">▼</span>
               </th>
@@ -354,15 +311,6 @@
         </tbody>
       </table>
       
-      <div class="notification is-info is-light" style="margin-top: 20px;">
-        <p><strong>Key VLM Insights:</strong></p>
-        <ul>
-          <li><strong>Molmo</strong> leads in overall accuracy but excels particularly in anatomical accuracy and action representation</li>
-          <li><strong>All VLMs</strong> achieve near-perfect performance on counting objects (>97% accuracy)</li>
-          <li><strong>Abstract concepts</strong> remain challenging for all VLMs (~30% accuracy)</li>
-          <li><strong>Text-based</strong> evaluation shows significant variation between VLMs (66-77%)</li>
-        </ul>
-      </div>
     </div>
     
   </div>
@@ -454,7 +402,7 @@
     <pre><code>@article{hayes2024finegrain,
   author    = {Hayes, Kevin David and Goldblum, Micah and Somepalli, Gowthami and Sehwag, Vikash and Panda, Ashwinee and Goldstein, Tom},
   title     = {FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges},
-  journal   = {arXiv preprint arXiv:2024.XXXXX},
+  journal   = {arXiv preprint arXiv:2512.02161},
   year      = {2024},
 }</code></pre>
   </div>
