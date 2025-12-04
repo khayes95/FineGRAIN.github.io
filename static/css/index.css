@@ -286,6 +286,14 @@ tr:hover {
   z-index: 10;
   border-right: 2px solid #ddd;
 }
+
+.enhanced-table .sticky-col-header {
+  position: sticky;
+  left: 0;
+  background-color: #f8f9fa;
+  z-index: 11;
+  border-right: 2px solid #ddd;
+}
 .sortable-header {
   cursor: pointer;
   user-select: none;
@@ -304,4 +312,24 @@ tr:hover {
 
 .sort-indicator.active {
   opacity: 1;
+}
+
+/* Mobile responsiveness for T2I table */
+@media screen and (max-width: 768px) {
+  /* Hide company column on mobile */
+  .enhanced-table #modelComparisonTable2 th:nth-child(2),
+  .enhanced-table #modelComparisonTable2 td:nth-child(2) {
+    display: none;
+  }
+
+  /* Make model name and average columns more prominent on mobile */
+  .enhanced-table #modelComparisonTable2 .sticky-col,
+  .enhanced-table #modelComparisonTable2 .sticky-col-header {
+    min-width: 120px;
+  }
+
+  .enhanced-table #modelComparisonTable2 .average-col,
+  .enhanced-table #modelComparisonTable2 .average-col-header {
+    min-width: 80px;
+  }
 }
